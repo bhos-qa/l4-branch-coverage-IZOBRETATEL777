@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    id("org.sonarqube") version "4.3.1.3277"
 }
 
 repositories {
@@ -40,4 +41,18 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "bhos-qa_l4-branch-coverage-IZOBRETATEL777")
+        property("sonar.organization", "bhos-qa")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.java.binaries", "build/classes/java/main")
+        property("sonar.java.test.binaries", "build/classes/java/test")
+        property("sonar.sources", "src/main/java")
+        property("sonar.tests", "src/test/java")
+        property("sonar.dynamicAnalysis", "reuseReports")
+        property("sonar.exclusions", "**/Main.java")
+    }
 }
