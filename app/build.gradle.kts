@@ -38,7 +38,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("com.example.App")
+    mainClass.set("com.example.Main")
 }
 
 tasks.withType<JacocoReport> {
@@ -54,10 +54,6 @@ tasks.withType<JacocoReport> {
 
         html.required = true
         html.outputLocation = file("$buildDir/reports/tests/JaCoCo/html")
-
-//        remove deprecated $buildir
-
-
     }
 }
 
