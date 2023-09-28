@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     id("org.sonarqube") version "4.3.1.3277"
+    id("jacoco")
 }
 
 repositories {
@@ -19,8 +20,10 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    //    JaCoCo
+    testImplementation("org.jacoco:org.jacoco.agent:0.8.10")
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
@@ -38,9 +41,36 @@ application {
     mainClass.set("com.example.App")
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
+tasks.withType<JacocoReport> {
+    classDirectories.setFrom(
+            fileTree(
+                    mapOf("dir" to "build/classes/java/main",
+                            "excludes" to listOf("**/Main.class"))
+            )
+    )
+    reports {
+        xml.required = true
+        xml.outputLocation = file("$buildDir/reports/tests/JaCoCo/xml/coverage.xml")
+
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/tests/JaCoCo/html")
+
+//        remove deprecated $buildir
+
+
+    }
+}
+
+tasks.withType<Test> {
     useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
+    reports {
+        junitXml.required = true
+        junitXml.outputLocation = file("$buildDir/reports/tests/JUnit/xml")
+
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/tests/JUnit/html")
+    }
 }
 
 sonar {
@@ -48,11 +78,15 @@ sonar {
         property("sonar.projectKey", "bhos-qa_l4-branch-coverage-IZOBRETATEL777")
         property("sonar.organization", "bhos-qa")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.jacoco.reportPaths", "build/reports/tests/JaCoCo/xml")
+        property("sonar.junit.reportPaths", "build/reports/tests/JUnit/xml")
+        property("sonar.java.coveragePlugin", "jacoco")
         property("sonar.java.binaries", "build/classes/java/main")
         property("sonar.java.test.binaries", "build/classes/java/test")
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
         property("sonar.dynamicAnalysis", "reuseReports")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/tests/JaCoCo/xml/coverage.xml")
         property("sonar.exclusions", "**/Main.java")
     }
 }
