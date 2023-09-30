@@ -27,6 +27,19 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
+
+    // H2 Database
+    implementation("com.h2database:h2:2.2.224")
+
+    // ORM
+    implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
+
+    //    Lombok
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    testCompileOnly ("org.projectlombok:lombok:1.18.30")
+    testAnnotationProcessor ("org.projectlombok:lombok:1.18.30")
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
