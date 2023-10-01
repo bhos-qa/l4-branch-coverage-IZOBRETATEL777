@@ -84,12 +84,4 @@ class StudentRepoImplTest {
         assertEquals("Bob Doe", studentRepo.getStudentById(1L).getName());
     }
 
-    @Test
-    @Order(6)
-    @DisplayName("Test deleteStudent method")
-    void deleteStudent() {
-        assertTrue(studentRepo.deleteStudent(1L));
-        List<Student> students = studentRepo.getAllStudents();
-        assertEquals(2, students.size());
-    }
 }

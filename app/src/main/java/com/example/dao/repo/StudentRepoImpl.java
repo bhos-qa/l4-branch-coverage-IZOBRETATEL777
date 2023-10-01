@@ -96,4 +96,32 @@ public class StudentRepoImpl implements StudentRepo {
             return false;
         }
     }
+
+    @Override
+    public List<Student> getStudentsByAge(Byte age) {
+        String sql = "SELECT s FROM Student s WHERE s.age = " + age;
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> getStudentsByName(String name) {
+        String sql = "SELECT s FROM Student s WHERE s.name = '" + name + "'";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> getStudentsByAgeAndName(Byte age, String name) {
+        String sql = "SELECT s FROM Student s WHERE s.age = " + age + " AND s.name = '" + name + "'";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Student> getStudentsByAgeOrName(Byte age, String name) {
+        String sql = "SELECT s FROM Student s WHERE s.age = " + age + " OR s.name = '" + name + "'";
+        Query query = entityManager.createQuery(sql);
+        return query.getResultList();
+    }
 }

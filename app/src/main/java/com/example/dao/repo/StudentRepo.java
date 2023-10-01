@@ -11,4 +11,8 @@ public interface StudentRepo {
     boolean addStudent(Student student);
     boolean updateStudent(Student student);
     boolean deleteStudent(Long id);
+    List<Student> getStudentsByAge(Byte age);
+    List<Student> getStudentsByName(String name);
+    List<Student> getStudentsByAgeAndName(Byte age, String name);
+    List<Student> getStudentsByAgeOrName(Byte age, String name);
 }
