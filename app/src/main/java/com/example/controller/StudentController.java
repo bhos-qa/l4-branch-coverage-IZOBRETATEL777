@@ -9,7 +9,6 @@ import java.util.Scanner;
 @AllArgsConstructor
 public class StudentController {
     private final StudentRepo studentRepo;
-
     private final Scanner scanner;
 
     public void getAllStudents() {

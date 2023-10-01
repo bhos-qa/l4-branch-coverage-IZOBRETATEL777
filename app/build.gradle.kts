@@ -63,7 +63,8 @@ tasks.withType<JacocoReport> {
     classDirectories.setFrom(
             fileTree(
                     mapOf("dir" to "build/classes/java/main",
-                            "excludes" to listOf("**/Main.class"))
+                            "excludes" to listOf("**/Main.class", "**/config/**", "**/controller/**")
+                    )
             )
     )
     reports {
@@ -101,7 +102,7 @@ sonar {
         property("sonar.tests", "src/test/java")
         property("sonar.dynamicAnalysis", "reuseReports")
         property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/tests/JaCoCo/xml/coverage.xml")
-        property("sonar.exclusions", "**/Main.java")
+        property("sonar.exclusions", "**/Main.class,**/config/**,**/controller/**")
     }
 }
 

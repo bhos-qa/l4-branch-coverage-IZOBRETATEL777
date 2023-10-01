@@ -2,11 +2,9 @@ package com.example.dao.repo;
 
 import com.example.dao.entity.Student;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepoImpl implements StudentRepo {
