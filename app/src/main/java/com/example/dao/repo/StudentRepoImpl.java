@@ -43,7 +43,11 @@ public class StudentRepoImpl implements StudentRepo {
     public boolean addStudent(Student student) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(student);
+            String sql = "INSERT INTO Student s " +
+                    "(s.name, s.email, s.age) " +
+                    "VALUES ('" + student.getName() + "', '" + student.getEmail() + "', " + student.getAge() + ")";
+            Query query = entityManager.createQuery(sql);
+            query.executeUpdate();
             entityManager.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -59,7 +63,13 @@ public class StudentRepoImpl implements StudentRepo {
     public boolean updateStudent(Student student) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(student);
+            String sql = "UPDATE Student s " +
+                    "SET s.name = '" + student.getName() + "', " +
+                    "s.email = '" + student.getEmail() + "', " +
+                    "s.age = " + student.getAge() + " " +
+                    "WHERE s.id = " + student.getId();
+            Query query = entityManager.createQuery(sql);
+            query.executeUpdate();
             entityManager.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -75,8 +85,9 @@ public class StudentRepoImpl implements StudentRepo {
     public boolean deleteStudent(Long id) {
         try {
             entityManager.getTransaction().begin();
-            Student student = entityManager.find(Student.class, id);
-            entityManager.remove(student);
+            String sql = "DELETE FROM Student s WHERE s.id = " + id;
+            Query query = entityManager.createQuery(sql);
+            query.executeUpdate();
             entityManager.getTransaction().commit();
             return true;
         } catch (Exception e) {
